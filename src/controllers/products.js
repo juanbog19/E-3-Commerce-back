@@ -7,9 +7,9 @@ const STATUS_ERROR = 500;
 
 const getProduct = async (req, res) => {
     try {
-        const usersDb = await Product.findAll()
-        return usersDb
-
+        const products = await Product.findAll()
+        
+        res.status(STATUS_OK).json(products);     
     } catch (error) {
         res.status(STATUS_ERROR).end(error.message)
     }
