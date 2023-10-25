@@ -26,7 +26,8 @@ const addProduct = async (req, res) => {
         cpu,
         battery,
         size,
-        special_features,
+        img,
+        price,
       } = req.body;
       const product = await Product.create({
         model,
@@ -35,7 +36,8 @@ const addProduct = async (req, res) => {
         cpu,
         battery,
         size,
-        special_features,
+        img,
+        price,
       });
       res.status(STATUS_CREATED).json(product);
     } catch (error) {
@@ -53,7 +55,8 @@ const addProduct = async (req, res) => {
         cpu,
         battery,
         size,
-        special_features,
+        img,
+        price,
       } = req.body;
       const product = await Product.findByPk(productId);
   
@@ -66,7 +69,8 @@ const addProduct = async (req, res) => {
         product.cpu = cpu;
         product.battery = battery;
         product.size = size;
-        product.special_features = special_features;
+        product.img = img;
+        product.price = price;
         await product.save();
         res.status(STATUS_OK).json(product);
       }
