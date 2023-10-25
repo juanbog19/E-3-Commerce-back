@@ -30,7 +30,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       price: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       memory: {
@@ -50,7 +50,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       size: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       special_features: {
