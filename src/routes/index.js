@@ -4,12 +4,14 @@ const { Router } = require('express');
 
 const router = Router();
 const users = require('./users.js');
+const products= require("./products.js");
 
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
 router.use("/", users);
+router.use("/",products);
 
 
 module.exports = router;
