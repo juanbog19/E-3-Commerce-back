@@ -1,12 +1,12 @@
-//MODELO BANNER
-//Acá van todas las propiedades de los banners
-//name: nombre del banner, sirve como identificador (banner1, banner2, bannerPrincipal, etc..)
-//image: url de la imagen del banner
+//MODELO ORDER
+//Acá van todas las propiedades de las ordenes de compra
+//order: clave o numero de orden - unico - obligatorio
+//amount: monto total de la compra
 
 const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   sequelize.define(
-    "banner",
+    "order",
     {
       id: {
         type: DataTypes.UUID,
@@ -14,12 +14,13 @@ module.exports = (sequelize) => {
         primaryKey: true,
         allowNull: false,
       },
-      name: {
+      order: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
-      image: {
-        type: DataTypes.STRING,
+      amount: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     },

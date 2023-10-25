@@ -1,12 +1,13 @@
-//MODELO BANNER
-//Acá van todas las propiedades de los banners
-//name: nombre del banner, sirve como identificador (banner1, banner2, bannerPrincipal, etc..)
-//image: url de la imagen del banner
+//MODELO BRAND
+//Acá van todas las propiedades de la marca
+//name: nombre de la marca - unico - obligatorio
+//description: descripcion de la marca
+//image: url de la imagen del logo de la marca
 
 const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   sequelize.define(
-    "banner",
+    "brand",
     {
       id: {
         type: DataTypes.UUID,
@@ -16,6 +17,11 @@ module.exports = (sequelize) => {
       },
       name: {
         type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      description: {
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       image: {
