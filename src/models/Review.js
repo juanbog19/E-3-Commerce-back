@@ -1,7 +1,7 @@
 //MODELO REVIEW
-//Acá van todas las propiedades del modelo Review
-//comment: guarda el comentario de la review - obligatiorio
-//rating: guarda el rating de la review - obligatiorio
+//Acá van todas las propiedades de las Reviews
+//comment: comentario de la review - obligatiorio
+//rating: rating de la review - valores del 1 al 5 - obligatiorio
 //status: true = comentario aprobado, false = comentario desaprobado, valor por default = true
 //date: fecha en la que se hizo la review, valor por defecto = fecha de hoy
 //La relacion con el usuario y con la orden de compra se hace en el controller
@@ -12,17 +12,17 @@ module.exports = (sequelize) => {
     "review",
     {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV1,
+        type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
         allowNull: false,
       },
       comment: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       rating: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       status: {

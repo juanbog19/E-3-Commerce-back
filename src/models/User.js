@@ -7,7 +7,6 @@
 //status: indica si el usuario esta baneado, false = no baneado, true = baneado
 //image: url de la imagen de perfil del usuario
 //address: direccion de envio
-//La relacion con el usuario y con la orden de compra se hace en el controller
 
 const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
@@ -15,9 +14,9 @@ module.exports = (sequelize) => {
     "user",
     {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV1,
+        type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
         allowNull: false,
       },
       username: {
