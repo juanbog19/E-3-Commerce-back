@@ -9,9 +9,9 @@ module.exports = (sequelize) => {
     "order",
     {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV1,
+        type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
         allowNull: false,
       },
       order: {
@@ -20,7 +20,7 @@ module.exports = (sequelize) => {
         unique: true,
       },
       amount: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
     },
