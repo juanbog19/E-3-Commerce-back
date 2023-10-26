@@ -45,8 +45,8 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 const { User, Review, Product, Brand, Order } = sequelize.models;
 
-Brand.hasMany(Product, { foreignKey: "id_brand" });
-User.hasMany(Order, { foreignKey: "id_user" });
+Product.belongsTo(Brand, { foreignKey: "id_brand" });
+Order.belongsTo(User, { foreignKey: "id_user" });
 Order.hasOne(Review, { foreignKey: "id_order" });
 Product.hasMany(Review, { foreignKey: "id_product" });
 Review.belongsTo(User, { foreignKey: "id_user" });
