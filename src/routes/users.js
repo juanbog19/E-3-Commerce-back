@@ -1,11 +1,11 @@
 const { Router } = require("express");
 const router = Router();
 
-//esto es de prueba 
-const { getUsers, postUsers, loginUser } = require('../controllers/users');
+const { getUsers, getUserId, postUsers, editUser } = require('../controllers/usersControllers');
 
 router.get('/users', getUsers); // ruta y (cb) <- con req, res
+router.get('/users/:id', getUserId);
 router.post('/users', postUsers);
-router.post('/login', loginUser);
+router.put('/users/:id', editUser);
 
 module.exports = router;

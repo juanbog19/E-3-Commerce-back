@@ -1,6 +1,4 @@
 const { User } = require('../db.js');
-const axios = require('axios');
-const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const { transporter } = require('./sendMail.js')
 
@@ -14,6 +12,22 @@ const getUsers = async (req, res) => {
         const usersDb = await User.findAll();
 
         res.status(STATUS_OK).json(usersDb);
+    } catch (error) {
+        res.status(STATUS_ERROR).end(error.message)
+    }
+}
+
+// :::::::: OBTENER USUARIO POR ID ::::::::::::::::::::::
+
+const getUserId = async (req, res) => {
+    try {
+
+        const {id} = req.params;
+
+        const user = await User.findByPk(id);
+
+        res.status(STATUS_OK).json(user)
+        
     } catch (error) {
         res.status(STATUS_ERROR).end(error.message)
     }
@@ -40,7 +54,7 @@ const postUsers = async (req, res) => {
 
         const newUser = await User.create(userData);
 
-        let subject = "NUEVA CUENTA";
+        let subject = `¡Bienvenido/a ${username}!`;
         let text = `¡Bienvenido a EcommerceApp! <br> Estamos emocionados de tenerte como parte de nuestra comunidad. Gracias por registrarte en EcommerceApp, tu destino número uno para descubrir y comprar los mejores celulares del mundo.
         <br> En EcommerceApp, te ofrecemos una amplia variedad de celulares, desde los celulares más exclusivas hasta las marcas más reconocidas. Nuestra misión es brindarte una experiencia única y personalizada, adaptada a tus gustos y preferencias. Ya seas un conocedor de la tecnología o un principiante, estamos seguros de que encontrarás algo que te encantará.
         <br> Si tienes alguna pregunta, inquietud o simplemente deseas aprender más sobre los celulares  que ofrecemos, nuestro equipo de soporte está aquí para ayudarte en cada paso del camino. No dudes en ponerte en contacto con nosotros.
@@ -54,22 +68,18 @@ const postUsers = async (req, res) => {
     }
 }
 
-const loginUser = async (req, res) => {
+// :::::::: EDITAR USUARIO ::::::::::::::::::::::
+
+const editUser = async (req, res) => {
     try {
+        const {id} = req.params;
+        const {username, email, image, address} = req.body;
 
-        const { email, password } = req.body;
+        const userEdit = await User.update({username, email, image, address}, {where: {id}});
 
-        const user = await User.findOne({ where: { email } })
+        const usersDb = await User.findAll();
 
-        if (!user) return res.status(STATUS_ERROR).json({ error: "Error. El usuario no existe." })
-
-        const isValidPassword = await bcrypt.compare(password, user.password)
-
-        if (isValidPassword) {
-            return res.status(STATUS_OK).json(user)
-        } else {
-            return res.status(STATUS_ERROR).json({ error: "Error. El usuario o la contraseña son incorrectos." })
-        }
+        res.status(STATUS_OK).json(usersDb)
     } catch (error) {
         res.status(STATUS_ERROR).end(error.message)
     }
@@ -77,6 +87,7 @@ const loginUser = async (req, res) => {
 
 module.exports = {
     getUsers,
+    getUserId,
     postUsers,
-    loginUser
+    editUser
 }
