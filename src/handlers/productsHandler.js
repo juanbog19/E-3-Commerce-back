@@ -37,6 +37,7 @@ const postProductHandler = async (req, res) => {
     battery,
     size,
     special_features,
+    id_brand,
   } = req.body;
   try {
     const result = await postProduct(
@@ -48,7 +49,8 @@ const postProductHandler = async (req, res) => {
       cpu,
       battery,
       size,
-      special_features
+      special_features,
+      id_brand
     );
     res.status(STATUS_CREATED).json("Producto creado exitosamente");
   } catch (error) {

@@ -1,4 +1,4 @@
-const { Product } = require("../db");
+const { Product, Brand } = require("../db");
 const axios = require("axios");
 const { Op } = require("sequelize");
 
@@ -8,7 +8,12 @@ const getAllProducts = async () => {
 };
 
 const getProductById = async (id) => {
-  const productById = await Product.findByPk(id);
+  const productById = await Product.findByPk(id, {
+    include: {
+      model: Brand,
+      attributes: ["id", "name"],
+    },
+  });
   return productById;
 };
 
@@ -21,7 +26,8 @@ const postProduct = async (
   cpu,
   battery,
   size,
-  special_features
+  special_features,
+  id_brand
 ) => {
   const newProduct = await Product.create({
     model,
@@ -34,6 +40,7 @@ const postProduct = async (
     size,
     special_features,
   });
+  await newProduct.setBrand(id_brand);
   return newProduct;
 };
 
