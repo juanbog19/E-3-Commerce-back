@@ -25,7 +25,7 @@ module.exports = (sequelize) => {
         allowNull: false,
         unique: true,
       },
-      img: {
+      image: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false,
       },
@@ -55,7 +55,7 @@ module.exports = (sequelize) => {
       },
       special_features: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
       },
     },
     { timestamps: false }
