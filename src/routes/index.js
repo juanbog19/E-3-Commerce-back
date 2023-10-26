@@ -8,14 +8,16 @@ const products = require("./products.js");
 const orders = require("./orders.js");
 const brands = require("./brands.js");
 const banners = require("./banners.js");
+const auth = require('./auth.js')
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
-router.use("/users", users);
-router.use("/products", products);
-router.use("/orders", orders);
-router.use("/banners", banners);
-router.use("/brands", brands);
+router.use("/", users);
+router.use("/", products);
+router.use("/", orders);
+router.use("/", banners);
+router.use("/", brands);
+router.use("/", auth);
 
 module.exports = router;

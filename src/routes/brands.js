@@ -17,10 +17,10 @@ const validate = (req, res, next) => {
   next();
 };
 
-brandsRouter.get("/", getBrandsHandler);
-brandsRouter.get("/:id", getBrandHandler);
-brandsRouter.post("/", postBrandHandler);
-brandsRouter.put("/:id", editBrandHandler);
-brandsRouter.delete("/:id", deleteBrandHandler);
+brandsRouter.get("/brands", getBrandsHandler);
+brandsRouter.get("/brands/:id", getBrandHandler);
+brandsRouter.post("/brands", postBrandHandler);
+brandsRouter.put("/brands/:id", editBrandHandler);
+brandsRouter.delete("/brands/:id", deleteBrandHandler);
 
 module.exports = brandsRouter;
