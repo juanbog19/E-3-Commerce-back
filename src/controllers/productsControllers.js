@@ -3,7 +3,12 @@ const axios = require("axios");
 const { Op } = require("sequelize");
 
 const getAllProducts = async () => {
-  const allProducts = await Product.findAll();
+  const allProducts = await Product.findAll({
+    include: {
+      model: Brand,
+      attributes: ["id", "name"],
+    },
+  });
   return allProducts;
 };
 
