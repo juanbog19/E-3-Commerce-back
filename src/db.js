@@ -46,7 +46,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 const { User, Review, Product, Brand, Order } = sequelize.models;
 
 Product.belongsTo(Brand, { foreignKey: "id_brand" });
-User.hasMany(Order, { foreignKey: "id_user" });
+Order.belongsTo(User, { foreignKey: "id_user" });
 Order.hasOne(Review, { foreignKey: "id_order" });
 Product.hasMany(Review, { foreignKey: "id_product" });
 Review.belongsTo(User, { foreignKey: "id_user" });

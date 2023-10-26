@@ -12,9 +12,6 @@ const getOrderById = async (id) => {
     include: {
       model: User,
       attributes: ["id", "username", "email"],
-      through: {
-        user: [],
-      },
     },
   });
   return orderById;
