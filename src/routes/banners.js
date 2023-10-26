@@ -16,10 +16,10 @@ const validate = (req, res, next) => {
   next();
 };
 
-bannersRouter.get("/", getBannersHandler);
-bannersRouter.get("/:id", getBannerHandler);
-bannersRouter.post("/", postBannerHandler);
-bannersRouter.put("/:id", editBannerHandler);
-bannersRouter.delete("/:id", deleteBannerHandler);
+bannersRouter.get("/banners", getBannersHandler);
+bannersRouter.get("/banners/:id", getBannerHandler);
+bannersRouter.post("/banners", postBannerHandler);
+bannersRouter.put("/banners/:id", editBannerHandler);
+bannersRouter.delete("/banners/:id", deleteBannerHandler);
 
 module.exports = bannersRouter;
