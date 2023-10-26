@@ -8,7 +8,7 @@ const getAllBanners = async () => {
 };
 
 const getBannerById = async (id) => {
-  const bannerById = await Banner.findByPk();
+  const bannerById = await Banner.findByPk(id);
   return bannerById;
 };
 

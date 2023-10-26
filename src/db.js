@@ -49,6 +49,7 @@ Brand.hasMany(Product, { foreignKey: "id_brand" });
 User.hasMany(Order, { foreignKey: "id_user" });
 Order.hasOne(Review, { foreignKey: "id_order" });
 Product.hasMany(Review, { foreignKey: "id_product" });
+Review.belongsTo(User, { foreignKey: "id_user" });
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
