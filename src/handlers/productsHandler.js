@@ -36,7 +36,7 @@ const getProductsFilterHandler = async (req, res) => {
 
   const result = filterBy
     ? await getFilteredProducts(filterBy, filterValue, orderBy, orderValue)
-    : await getAllProducts();
+    : await getAllProducts(orderBy, orderValue);
   res.status(STATUS_OK).json(result);
 };
 
