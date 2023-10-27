@@ -105,6 +105,34 @@ const deleteProduct = async (id) => {
   }
 };
 
+const getQueryProducts = async (model) => {
+  try {
+    const trimmedModel = model.trim();
+    const toLowerModel = trimmedModel.toLowerCase();
+
+    if (!model || model.trim() === "") {
+      return { error: "Error. La cadena de búsqueda está vacía." };
+    }
+
+    const searchDbName = await Product.findAll({
+      where: {
+        [Op.or]: [
+          { model: toLowerModel },
+          { model: { [Op.iLike]: "%" + toLowerModel + "%" } },
+        ],
+      },
+    });
+
+    if (searchDbName.length > 0) {
+      return searchDbName;
+    } else {
+      return { error: "Error. No coincide con ningun registro." };
+    }
+  } catch (error) {
+    return { error: error.message };
+  }
+};
+
 module.exports = {
   getAllProducts,
   getProductsFilter,
@@ -112,4 +140,5 @@ module.exports = {
   postProduct,
   editProduct,
   deleteProduct,
+  getQueryProducts,
 };

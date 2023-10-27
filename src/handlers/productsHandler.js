@@ -5,6 +5,7 @@ const {
   postProduct,
   editProduct,
   deleteProduct,
+  getQueryProducts,
 } = require("../controllers/productsControllers");
 
 const STATUS_OK = 200;
@@ -13,6 +14,7 @@ const STATUS_NO_CONTENT = 204; //Lo uso para indicar que una solicitud se ha pro
 const STATUS_ERROR = 500;
 
 const getProductsHandler = async (req, res) => {
+<<<<<<< HEAD
   const { filter, name } = req.query;
   console.log(filter);
   console.log(name);
@@ -20,6 +22,12 @@ const getProductsHandler = async (req, res) => {
     ? await getProductsFilter(filter, name)
     : await getAllProducts();
   res.status(STATUS_OK).json(allProducts);
+=======
+  const {model} = req.query;
+
+  const result = model ? await getQueryProducts(model) : await getAllProducts()
+  res.status(STATUS_OK).json(result);
+>>>>>>> c08f257e2aefeea949ed8ccd3b1a688582e98180
 };
 
 const getProductHandler = async (req, res) => {
@@ -111,5 +119,5 @@ module.exports = {
   getProductHandler,
   postProductHandler,
   editProductHandler,
-  deleteProductHandler,
+  deleteProductHandler
 };
