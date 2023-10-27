@@ -12,24 +12,6 @@ const getAllProducts = async () => {
   return allProducts;
 };
 
-const getProductsFilter = async (filter, name) => {
-  if (filter === "model") {
-    const results = await Product.findAll({
-      where: {
-        model: name,
-      },
-    });
-    return results;
-  } else if (filter === "cpu") {
-    const results = await Product.findAll({
-      where: {
-        cpu: name,
-      },
-    });
-    return results;
-  }
-};
-
 const getProductById = async (id) => {
   const productById = await Product.findByPk(id, {
     include: {
@@ -133,12 +115,51 @@ const getQueryProducts = async (model) => {
   }
 };
 
+const getFilteredProducts = async (
+  filterBy,
+  filterValue,
+  orderBy,
+  orderValue
+) => {
+  if (!filterValue) {
+    return "Seleccione un valor del filtro";
+  } else if (filterBy === "cpu") {
+    const results = await Product.findAll({
+      where: {
+        cpu: filterValue,
+      },
+    });
+    return results;
+  } else if (filterBy === "memory") {
+    const results = await Product.findAll({
+      where: {
+        memory: filterValue,
+      },
+    });
+    return results;
+  } else if (filterBy === "storage") {
+    const results = await Product.findAll({
+      where: {
+        storage: filterValue,
+      },
+    });
+    return results;
+  } else if (filterBy === "size") {
+    const results = await Product.findAll({
+      where: {
+        size: filterValue,
+      },
+    });
+    return results;
+  }
+};
+
 module.exports = {
   getAllProducts,
-  getProductsFilter,
   getProductById,
   postProduct,
   editProduct,
   deleteProduct,
   getQueryProducts,
+  getFilteredProducts,
 };
