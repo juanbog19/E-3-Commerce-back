@@ -1,5 +1,6 @@
 const {
   getAllProducts,
+  getProductsFilter,
   getProductById,
   postProduct,
   editProduct,
@@ -12,7 +13,12 @@ const STATUS_NO_CONTENT = 204; //Lo uso para indicar que una solicitud se ha pro
 const STATUS_ERROR = 500;
 
 const getProductsHandler = async (req, res) => {
-  const allProducts = await getAllProducts();
+  const { filter, name } = req.query;
+  console.log(filter);
+  console.log(name);
+  const allProducts = name
+    ? await getProductsFilter(filter, name)
+    : await getAllProducts();
   res.status(STATUS_OK).json(allProducts);
 };
 

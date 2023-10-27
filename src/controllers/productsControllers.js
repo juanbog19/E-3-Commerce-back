@@ -12,6 +12,24 @@ const getAllProducts = async () => {
   return allProducts;
 };
 
+const getProductsFilter = async (filter, name) => {
+  if (filter === "model") {
+    const results = await Product.findAll({
+      where: {
+        model: name,
+      },
+    });
+    return results;
+  } else if (filter === "cpu") {
+    const results = await Product.findAll({
+      where: {
+        cpu: name,
+      },
+    });
+    return results;
+  }
+};
+
 const getProductById = async (id) => {
   const productById = await Product.findByPk(id, {
     include: {
@@ -89,6 +107,7 @@ const deleteProduct = async (id) => {
 
 module.exports = {
   getAllProducts,
+  getProductsFilter,
   getProductById,
   postProduct,
   editProduct,
