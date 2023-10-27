@@ -151,6 +151,19 @@ const getFilteredProducts = async (
       },
     });
     return results;
+  } else if (filterBy === "brand") {
+    const results = await Product.findAll({
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+          where: {
+            name: filterValue,
+          },
+        },
+      ],
+    });
+    return results;
   }
 };
 
