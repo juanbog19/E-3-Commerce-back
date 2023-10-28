@@ -19,7 +19,7 @@ const validate = (req, res, next) => {
 
 ordersRouter.get("/orders", getOrdersHandler);
 ordersRouter.get("/orders/:id", getOrderHandler);
-ordersRouter.post("/orders", postOrderHandler);
+ordersRouter.post("/orders", validate, postOrderHandler);
 ordersRouter.put("/orders/:id", editOrderHandler);
 ordersRouter.delete("/orders/:id", deleteOrderHandler);
 

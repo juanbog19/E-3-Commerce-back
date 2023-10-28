@@ -26,7 +26,7 @@ module.exports = (sequelize) => {
         unique: true,
       },
       image: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
+        type: DataTypes.STRING,
         allowNull: false,
       },
       price: {
@@ -47,7 +47,7 @@ module.exports = (sequelize) => {
       },
       battery: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       size: {
         type: DataTypes.FLOAT,
