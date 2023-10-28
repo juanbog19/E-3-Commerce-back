@@ -141,6 +141,12 @@ const getQueryProducts = async (model) => {
           { model: { [Op.iLike]: "%" + toLowerModel + "%" } },
         ],
       },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
     });
 
     if (searchDbName.length > 0) {
