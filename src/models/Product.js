@@ -47,7 +47,7 @@ module.exports = (sequelize) => {
       },
       battery: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       size: {
         type: DataTypes.FLOAT,
