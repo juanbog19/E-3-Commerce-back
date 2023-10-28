@@ -125,6 +125,15 @@ const deleteProduct = async (id) => {
   }
 };
 
+const restoreProduct = async (id) => {
+  try {
+    await Product.restore({ where: { id } });
+    return { message: "Product restored successfully" };
+  } catch (error) {
+    return { error: error.message };
+  }
+};
+
 const getQueryProducts = async (model) => {
   try {
     const trimmedModel = model.trim();
@@ -141,6 +150,12 @@ const getQueryProducts = async (model) => {
           { model: { [Op.iLike]: "%" + toLowerModel + "%" } },
         ],
       },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
     });
 
     if (searchDbName.length > 0) {
@@ -168,6 +183,12 @@ const getFilteredProducts = async (
       where: {
         cpu: filterValue,
       },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     return results;
   } else if (filterBy === "cpu" && orderBy === "name" && orderValue === "ZA") {
@@ -176,6 +197,12 @@ const getFilteredProducts = async (
       where: {
         cpu: filterValue,
       },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     return results;
   } else if (
@@ -188,6 +215,12 @@ const getFilteredProducts = async (
       where: {
         cpu: filterValue,
       },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     return results;
   } else if (
@@ -200,6 +233,12 @@ const getFilteredProducts = async (
       where: {
         cpu: filterValue,
       },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     return results;
   } else if (filterBy === "cpu") {
@@ -207,6 +246,12 @@ const getFilteredProducts = async (
       where: {
         cpu: filterValue,
       },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     return results;
     // **************** MEMORY ****************
@@ -220,6 +265,12 @@ const getFilteredProducts = async (
       where: {
         memory: filterValue,
       },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     return results;
   } else if (
@@ -232,6 +283,12 @@ const getFilteredProducts = async (
       where: {
         memory: filterValue,
       },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     return results;
   } else if (
@@ -244,6 +301,12 @@ const getFilteredProducts = async (
       where: {
         memory: filterValue,
       },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     return results;
   } else if (
@@ -256,6 +319,12 @@ const getFilteredProducts = async (
       where: {
         memory: filterValue,
       },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     return results;
   } else if (filterBy === "memory") {
@@ -263,6 +332,12 @@ const getFilteredProducts = async (
       where: {
         memory: filterValue,
       },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     return results;
     // **************** STORAGE ****************
@@ -276,6 +351,12 @@ const getFilteredProducts = async (
       where: {
         storage: filterValue,
       },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     return results;
   } else if (
@@ -288,6 +369,12 @@ const getFilteredProducts = async (
       where: {
         storage: filterValue,
       },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     return results;
   } else if (
@@ -300,6 +387,12 @@ const getFilteredProducts = async (
       where: {
         storage: filterValue,
       },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     return results;
   } else if (
@@ -312,6 +405,12 @@ const getFilteredProducts = async (
       where: {
         storage: filterValue,
       },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     return results;
   } else if (filterBy === "storage") {
@@ -319,6 +418,12 @@ const getFilteredProducts = async (
       where: {
         storage: filterValue,
       },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     return results;
     // **************** SIZE ****************
@@ -328,6 +433,12 @@ const getFilteredProducts = async (
       where: {
         size: filterValue,
       },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     return results;
   } else if (filterBy === "size" && orderBy === "name" && orderValue === "ZA") {
@@ -336,6 +447,12 @@ const getFilteredProducts = async (
       where: {
         size: filterValue,
       },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     return results;
   } else if (
@@ -348,6 +465,12 @@ const getFilteredProducts = async (
       where: {
         size: filterValue,
       },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     return results;
   } else if (
@@ -360,6 +483,12 @@ const getFilteredProducts = async (
       where: {
         size: filterValue,
       },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     return results;
   } else if (filterBy === "size") {
@@ -367,6 +496,12 @@ const getFilteredProducts = async (
       where: {
         size: filterValue,
       },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     return results;
     // **************** BRAND ****************
@@ -467,4 +602,5 @@ module.exports = {
   deleteProduct,
   getQueryProducts,
   getFilteredProducts,
+  restoreProduct,
 };

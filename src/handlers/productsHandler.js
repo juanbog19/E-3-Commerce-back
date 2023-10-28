@@ -1,12 +1,12 @@
 const {
   getAllProducts,
-  getProductsFilter,
   getProductById,
   postProduct,
   editProduct,
   deleteProduct,
   getQueryProducts,
   getFilteredProducts,
+  restoreProduct,
 } = require("../controllers/productsControllers");
 
 const STATUS_OK = 200;
@@ -114,6 +114,16 @@ const deleteProductHandler = async (req, res) => {
   }
 };
 
+const restoreProductHandler = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await restoreProduct(id);
+    res.status(STATUS_OK).json(result);
+  } catch (error) {
+    res.status(STATUS_ERROR).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getProductsHandler,
   getProductHandler,
@@ -121,4 +131,5 @@ module.exports = {
   editProductHandler,
   deleteProductHandler,
   getProductsFilterHandler,
+  restoreProductHandler,
 };
