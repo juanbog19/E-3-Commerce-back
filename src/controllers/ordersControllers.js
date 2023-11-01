@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { Order, User } = require("../db");
+const { Order, User, Product } = require("../db");
 const { Op } = require("sequelize");
 
 const getAllOrders = async () => {
@@ -22,12 +22,13 @@ const getOrderById = async (id) => {
   return orderById;
 };
 
-const postOrder = async (order, amount, id_user) => {
+const postOrder = async (order, amount, id_user, id_product) => {
   const newOrder = await Order.create({
     order,
     amount,
   });
-  //await newOrder.setUser(id_user);
+  await newOrder.setUser(id_user);
+  await newOrder.setProduct(id_product);
   return newOrder;
 };
 

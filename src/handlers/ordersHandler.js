@@ -22,9 +22,9 @@ const getOrderHandler = async (req, res) => {
 };
 
 const postOrderHandler = async (req, res) => {
-  const { order, amount, id_user } = req.body;
+  const { order, amount, id_user, id_product } = req.body;
   try {
-    const newOrder = await postOrder(order, amount, id_user);
+    const newOrder = await postOrder(order, amount, id_user, id_product);
     res.status(201).json({ "Orden creada exitosamente": newOrder });
   } catch (error) {
     res.status(400).json({ error: error.message });
