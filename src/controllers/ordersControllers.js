@@ -1,33 +1,48 @@
 const axios = require("axios");
-const { Order, User } = require("../db");
+const { Order, User, Product, Brand } = require("../db");
 const { Op } = require("sequelize");
 
 const getAllOrders = async () => {
   const allOrders = await Order.findAll({
-    include: {
-      model: User,
-      attributes: ["id", "username", "email"],
-    },
+    include: [
+      {
+        model: User,
+      },
+      {
+        model: Product,
+        include: {
+          model: Brand,
+        },
+      },
+    ],
   });
   return allOrders;
 };
 
 const getOrderById = async (id) => {
   const orderById = await Order.findByPk(id, {
-    include: {
-      model: User,
-      attributes: ["id", "username", "email"],
-    },
+    include: [
+      {
+        model: User,
+      },
+      {
+        model: Product,
+        include: {
+          model: Brand,
+        },
+      },
+    ],
   });
   return orderById;
 };
 
-const postOrder = async (order, amount, id_user) => {
+const postOrder = async (order, amount, id_user, id_product) => {
   const newOrder = await Order.create({
     order,
     amount,
   });
-  //await newOrder.setUser(id_user);
+  await newOrder.setUser(id_user);
+  await newOrder.setProduct(id_product);
   return newOrder;
 };
 
