@@ -22,12 +22,12 @@ const getUsers = async (req, res) => {
 const getUserId = async (req, res) => {
     try {
 
-        const {id} = req.params;
+        const { id } = req.params;
 
         const user = await User.findByPk(id);
 
         res.status(STATUS_OK).json(user)
-        
+
     } catch (error) {
         res.status(STATUS_ERROR).end(error.message)
     }
@@ -72,10 +72,10 @@ const postUsers = async (req, res) => {
 
 const editUser = async (req, res) => {
     try {
-        const {id} = req.params;
-        const {username, email, image, address} = req.body;
+        const { id } = req.params;
+        const { username, email, image, address } = req.body;
 
-        const userEdit = await User.update({username, email, image, address}, {where: {id}});
+        const userEdit = await User.update({ username, email, image, address }, { where: { id } });
 
         const usersDb = await User.findAll();
 
@@ -85,9 +85,31 @@ const editUser = async (req, res) => {
     }
 }
 
+// :::::::: BANEAR USUARIO ::::::::::::::::::::::
+
+const banUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const record = await User.findByPk(id)
+        if (!record) {
+            return res.status(STATUS_ERROR).send('Registro no encontrado')
+        }
+
+        const newBanUser = !record.status
+        await User.update({ status: newBanUser }, { where: { id } })
+
+        const userUpdated = await User.findByPk(id)
+
+        res.status(STATUS_OK).json(userUpdated)
+    } catch (error) {
+        res.status(STATUS_ERROR).end(error.message)
+    }
+}
+
 module.exports = {
     getUsers,
     getUserId,
     postUsers,
-    editUser
+    editUser,
+    banUser
 }
