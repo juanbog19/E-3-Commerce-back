@@ -8,15 +8,7 @@ const getAllBrands = async () => {
 };
 
 const getBrandById = async (id) => {
-  const brandById = await Brand.findByPk(id, {
-    include: {
-      model: Product,
-      attributes: ["id", "model", "price"],
-      through: {
-        products: [],
-      },
-    },
-  });
+  const brandById = await Brand.findByPk(id);
   return brandById;
 };
 
