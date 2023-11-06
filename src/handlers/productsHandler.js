@@ -7,6 +7,8 @@ const {
   getQueryProducts,
   getFilteredProducts,
   restoreProduct,
+  getAllProductsList,
+  getDisabledProducts,
 } = require("../controllers/productsControllers");
 
 const STATUS_OK = 200;
@@ -25,6 +27,20 @@ const getProductHandler = async (req, res) => {
   const { id } = req.params;
   try {
     const result = await getProductById(id);
+    res.status(STATUS_OK).json(result);
+  } catch (error) {
+    res.status(STATUS_ERROR).json({ error: error.message });
+  }
+};
+
+const getAllProductsHandler = async (req, res) => {
+  const result = await getAllProductsList();
+  res.status(STATUS_OK).json(result);
+};
+
+const getDisabledProductsHandler = async (req, res) => {
+  try {
+    const result = await getDisabledProducts();
     res.status(STATUS_OK).json(result);
   } catch (error) {
     res.status(STATUS_ERROR).json({ error: error.message });
@@ -84,6 +100,7 @@ const editProductHandler = async (req, res) => {
     battery,
     size,
     special_features,
+    id_brand,
   } = req.body;
   try {
     const result = await editProduct(
@@ -96,7 +113,8 @@ const editProductHandler = async (req, res) => {
       cpu,
       battery,
       size,
-      special_features
+      special_features,
+      id_brand
     );
     res.status(STATUS_CREATED).json(result);
   } catch (error) {
@@ -132,4 +150,6 @@ module.exports = {
   deleteProductHandler,
   getProductsFilterHandler,
   restoreProductHandler,
+  getAllProductsHandler,
+  getDisabledProductsHandler,
 };
