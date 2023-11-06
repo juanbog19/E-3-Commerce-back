@@ -9,6 +9,9 @@ const getAllProducts = async (orderBy, orderValue) => {
         model: Brand,
         attributes: ["id", "name"],
       },
+      where: {
+        deleted: { [Op.not]: true },
+      },
     });
     return allProducts;
   } else if (orderBy === "name" && orderValue === "AZ") {
@@ -60,6 +63,39 @@ const getProductById = async (id) => {
   return productById;
 };
 
+const getAllProductsList = async () => {
+  const allProducts = await Product.findAll({
+    include: {
+      model: Brand,
+      attributes: ["id", "name"],
+    },
+  });
+  return allProducts;
+};
+const getDisabledProducts = async () => {
+  const allProducts = await Product.findAll({
+    include: {
+      model: Brand,
+      attributes: ["id", "name"],
+    },
+    where: {
+      deleted: { [Op.not]: false },
+    },
+  });
+  return allProducts;
+  // const results = await Product.findAll({
+  //   include: {
+  //     model: Brand,
+  //     attributes: ["id", "name"],
+  //   },
+  //   where: {
+  //     deletedAt: { [Op.not]: null },
+  //   },
+  //   paranoid: true,
+  // });
+  // return results;
+};
+
 const postProduct = async (
   model,
   image,
@@ -97,7 +133,8 @@ const editProduct = async (
   cpu,
   battery,
   size,
-  special_features
+  special_features,
+  id_brand
 ) => {
   const updateProduct = await Product.update(
     {
@@ -110,16 +147,20 @@ const editProduct = async (
       battery,
       size,
       special_features,
+      brand: {
+        id: id_brand,
+      },
     },
     { where: { id } }
   );
+  //await updateProduct.setBrand(id_brand);
   return updateProduct;
 };
 
 const deleteProduct = async (id) => {
   try {
-    await Product.destroy({ where: { id } });
-    return { message: "Product deleted successfully" };
+    await Product.update({ deleted: true }, { where: { id } });
+    return { message: "Product softdeleted successfully" };
   } catch (error) {
     return { error: error.message };
   }
@@ -127,7 +168,7 @@ const deleteProduct = async (id) => {
 
 const restoreProduct = async (id) => {
   try {
-    await Product.restore({ where: { id } });
+    await Product.update({ deleted: false }, { where: { id } });
     return { message: "Product restored successfully" };
   } catch (error) {
     return { error: error.message };
@@ -603,4 +644,6 @@ module.exports = {
   getQueryProducts,
   getFilteredProducts,
   restoreProduct,
+  getAllProductsList,
+  getDisabledProducts,
 };
