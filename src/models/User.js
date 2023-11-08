@@ -41,14 +41,20 @@ module.exports = (sequelize) => {
       status: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+        defaultValue: true,
+      },
+      google: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
       },
       image: {
         type: DataTypes.STRING,
-        allowNull: false,
+        //allowNull: false,
       },
       address: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        //allowNull: false,
       },
     },
     { timestamps: false }
