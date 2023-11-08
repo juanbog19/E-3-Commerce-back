@@ -23,7 +23,7 @@ module.exports = (sequelize) => {
       model: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        unique: false,
       },
       image: {
         type: DataTypes.STRING,
@@ -57,7 +57,12 @@ module.exports = (sequelize) => {
         type: DataTypes.TEXT,
         allowNull: true,
       },
+      deleted: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
     },
-    { timestamps: true, paranoid: true }
+    { timestamps: true }
   );
 };
