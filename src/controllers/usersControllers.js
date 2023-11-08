@@ -45,7 +45,15 @@ const postUsers = async (req, res) => {
             }
         })
 
-        if (emailVerification) return res.status(STATUS_ERROR).json({ error: "Error. Este email ya existe." });
+        const usernameVerification = await User.findOne({
+            where: {
+                username: username
+            }
+        })
+
+        if (emailVerification) return res.status(STATUS_ERROR).json({ error: "El correo electrónico ya existe" });
+
+        if (usernameVerification) return res.status(STATUS_ERROR).json({ error: "El usuario ya existe" });
 
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -54,13 +62,8 @@ const postUsers = async (req, res) => {
 
         const newUser = await User.create(userData);
 
-        let subject = `¡Bienvenido/a ${username}!`;
-        let text = `¡Bienvenido a EcommerceApp! <br> Estamos emocionados de tenerte como parte de nuestra comunidad. Gracias por registrarte en EcommerceApp, tu destino número uno para descubrir y comprar los mejores celulares del mundo.
-        <br> En EcommerceApp, te ofrecemos una amplia variedad de celulares, desde los celulares más exclusivas hasta las marcas más reconocidas. Nuestra misión es brindarte una experiencia única y personalizada, adaptada a tus gustos y preferencias. Ya seas un conocedor de la tecnología o un principiante, estamos seguros de que encontrarás algo que te encantará.
-        <br> Si tienes alguna pregunta, inquietud o simplemente deseas aprender más sobre los celulares  que ofrecemos, nuestro equipo de soporte está aquí para ayudarte en cada paso del camino. No dudes en ponerte en contacto con nosotros.
-        <br> Gracias nuevamente por unirte a EcommerceApp. Esperamos que tu experiencia con nosotros sea excepcional y que disfrutes de cada dispositivo que descubras.
-        <br> Con entusiasmo, El equipo de EcommerceApp! `;
-        transporter(email, subject, text);
+        let subject = `👋 Bienvenido/a a PhonePulse ${username}!`;
+        transporter(email, subject, username);
 
         res.status(STATUS_OK).json(newUser)
     } catch (error) {
