@@ -9,6 +9,7 @@ const orders = require("./orders.js");
 const brands = require("./brands.js");
 const banners = require("./banners.js");
 const auth = require("./auth.js");
+const reviews = require("./reviews.js");
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
@@ -19,5 +20,6 @@ router.use("/", orders);
 router.use("/", banners);
 router.use("/", brands);
 router.use("/", auth);
+router.use("/", reviews);
 
 module.exports = router;
