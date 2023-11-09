@@ -78,7 +78,7 @@ const login = async (req, res) => {
 
     //Si el usuario esta activo
     if (!usuario.status) {
-      return res.status(400).json({ msg: 'Tu perfil se encuentra baneado. Por favor contacta con un administrador.' })
+      return res.status(400).json({ msg: 'Tu perfil se encuentra baneado. Por favor contacta con un administrador' })
     }
 
     //Verificar la contraseña
@@ -88,12 +88,9 @@ const login = async (req, res) => {
     }
 
     //Generar el JWT
-    const token = await generateJWT(usuario.id)
+    //const token = await generateJWT(usuario.id)
 
-    res.json({
-      usuario,
-      token
-    })
+    res.json(usuario)
 
   } catch (error) {
     console.log(error)
@@ -110,6 +107,7 @@ const googleSignIn = async (req, res) => {
     const { username, image, email } = await googleVerify(id_token)
 
     let usuario = await User.findOne({ where: { email } })
+    //console.log(usuario.dataValues.google)
 
     if (!usuario) {
       const data = {
@@ -126,15 +124,18 @@ const googleSignIn = async (req, res) => {
 
     if (!usuario.status) {
       return res.status(401).json({
-        msg: 'Usuario baneado'
+        msg: 'Tu perfil se encuentra baneado. Por favor contacta con un administrador'
       })
     }
 
-    const token = await generateJWT(usuario.id)
+    if(usuario && usuario.dataValues.google === false){
+      return res.status(400).json({msg: 'Ya tienes una cuenta. Inicia sesión a traves del formulario'})
+    }
+
+    //const token = await generateJWT(usuario.id)
 
     res.json({
-      usuario,
-      token
+      usuario
     })
   } catch (error) {
     res.status(400).json({ msg: 'El token no se pudo verificar' })
