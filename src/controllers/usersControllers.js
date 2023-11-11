@@ -109,10 +109,32 @@ const banUser = async (req, res) => {
     }
 }
 
+// :::::::: PERMISOS ADMIN ::::::::::::::::::::::
+
+const adminUser = async (req, res) => {
+    try {
+        const {id} = req.params
+        const record = await User.findByPk(id)
+        if (!record) {
+            return res.status(STATUS_ERROR).send('Registro no encontrado')
+        }
+
+        const changeUser = !record.rol
+        await User.update({ rol: changeUser }, { where: { id } })
+
+        const userPrivileges = await User.findByPk(id)
+
+        res.status(STATUS_OK).json(userPrivileges)
+    } catch (error) {
+        res.status(STATUS_ERROR).end(error.message)
+    }
+}
+
 module.exports = {
     getUsers,
     getUserId,
     postUsers,
     editUser,
-    banUser
+    banUser,
+    adminUser
 }
