@@ -34,9 +34,9 @@ module.exports = (sequelize) => {
         unique: true,
       },
       rol: {
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue: "user",
+        defaultValue: false,
       },
       status: {
         type: DataTypes.BOOLEAN,
