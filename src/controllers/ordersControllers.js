@@ -36,6 +36,26 @@ const getOrderById = async (id) => {
   return orderById;
 };
 
+const getOrdersFromUser = async (id) => {
+  const userOrders = await Order.findAll({
+    where: {
+      id_user: id,
+    },
+    // include: [
+    //   {
+    //     model: User,
+    //   },
+    //   {
+    //     model: Product,
+    //     include: {
+    //       model: Brand,
+    //     },
+    //   },
+    // ],
+  });
+  return userOrders;
+};
+
 const postOrder = async (order, amount, id_user, id_product) => {
   const newOrder = await Order.create({
     order,
@@ -72,4 +92,5 @@ module.exports = {
   postOrder,
   editOrder,
   deleteOrder,
+  getOrdersFromUser,
 };
