@@ -41,17 +41,17 @@ const getOrdersFromUser = async (id) => {
     where: {
       id_user: id,
     },
-    // include: [
-    //   {
-    //     model: User,
-    //   },
-    //   {
-    //     model: Product,
-    //     include: {
-    //       model: Brand,
-    //     },
-    //   },
-    // ],
+    include: [
+      {
+        model: User,
+      },
+      {
+        model: Product,
+        include: {
+          model: Brand,
+        },
+      },
+    ],
   });
   return userOrders;
 };
