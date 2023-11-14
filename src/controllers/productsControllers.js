@@ -186,9 +186,14 @@ const getQueryProducts = async (model) => {
 
     const searchDbName = await Product.findAll({
       where: {
-        [Op.or]: [
-          { "$brand.name$": { [Op.iLike]: "%" + toLowerModel + "%" } }, // Buscar por nombre de marca
-          { model: { [Op.iLike]: "%" + toLowerModel + "%" } }, // Buscar por nombre de producto
+        [Op.and]: [
+          { deleted: false },
+          {
+            [Op.or]: [
+              { "$brand.name$": { [Op.iLike]: "%" + toLowerModel + "%" } }, // Buscar por nombre de marca
+              { model: { [Op.iLike]: "%" + toLowerModel + "%" } }, // Buscar por nombre de producto
+            ],
+          },
         ],
       },
       include: [
@@ -231,11 +236,16 @@ const postpruebaSearchBar = async (searchString) => {
 
     const searchDbName = await Product.findAll({
       where: {
-        [Op.or]: [
+        [Op.and]: [
+          { deleted: false },
           {
-            "$brand.name$": { [Op.iLike]: "%" + trimmedSearchString + "%" },
-          }, // Buscar por nombre de marca
-          { model: { [Op.iLike]: "%" + trimmedSearchString + "%" } }, // Buscar por nombre de producto
+            [Op.or]: [
+              {
+                "$brand.name$": { [Op.iLike]: "%" + trimmedSearchString + "%" },
+              }, // Buscar por nombre de marca
+              { model: { [Op.iLike]: "%" + trimmedSearchString + "%" } }, // Buscar por nombre de producto
+            ],
+          },
         ],
       },
       include: [
@@ -682,6 +692,22 @@ const getFilteredProducts = async (
   }
 };
 
+const statusProduct = async (id) => {
+
+    const record = await Product.findByPk(id)
+    if (!record) {
+        return 'Registro no encontrado'
+    }
+
+    const newChangeStatus = !record.deleted
+    await Product.update({ deleted: newChangeStatus }, { where: { id } })
+
+    const productUpdated = await Product.findByPk(id)
+
+    return productUpdated
+
+}
+
 module.exports = {
   getAllProducts,
   getProductById,
@@ -694,4 +720,5 @@ module.exports = {
   getAllProductsList,
   getDisabledProducts,
   postpruebaSearchBar,
+  statusProduct
 };

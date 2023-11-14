@@ -10,6 +10,7 @@ const {
   getAllProductsList,
   getDisabledProducts,
   postpruebaSearchBar,
+  statusProduct,
 } = require("../controllers/productsControllers");
 
 const STATUS_OK = 200;
@@ -156,6 +157,16 @@ const pruebaSearchBar = async (req, res) => {
   }
 };
 
+const statusProductHandler = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const record = await statusProduct(id)
+    res.status(STATUS_OK).json(record)
+} catch (error) {
+    res.status(STATUS_ERROR).end(error.message)
+}
+}
+
 module.exports = {
   getProductsHandler,
   getProductHandler,
@@ -167,4 +178,5 @@ module.exports = {
   getAllProductsHandler,
   getDisabledProductsHandler,
   pruebaSearchBar,
+  statusProductHandler
 };
