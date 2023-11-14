@@ -187,8 +187,55 @@ const getQueryProducts = async (model) => {
     const searchDbName = await Product.findAll({
       where: {
         [Op.or]: [
-          { model: toLowerModel },
-          { model: { [Op.iLike]: "%" + toLowerModel + "%" } },
+          { "$brand.name$": { [Op.iLike]: "%" + toLowerModel + "%" } }, // Buscar por nombre de marca
+          { model: { [Op.iLike]: "%" + toLowerModel + "%" } }, // Buscar por nombre de producto
+        ],
+      },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
+      // where: {
+      //   [Op.or]: [
+      //     { model: toLowerModel },
+      //     { model: { [Op.iLike]: "%" + toLowerModel + "%" } },
+      //   ],
+      // },
+      // include: [
+      //   {
+      //     model: Brand,
+      //     attributes: ["id", "name"],
+      //   },
+      // ],
+    });
+
+    if (searchDbName.length > 0) {
+      return searchDbName;
+    } else {
+      return { error: "Error. No coincide con ningun registro." };
+    }
+  } catch (error) {
+    return { error: error.message };
+  }
+};
+
+const postpruebaSearchBar = async (searchString) => {
+  try {
+    const trimmedSearchString = searchString.trim();
+
+    if (!searchString || trimmedSearchString === "") {
+      return { error: "Error. La cadena de búsqueda está vacía." };
+    }
+
+    const searchDbName = await Product.findAll({
+      where: {
+        [Op.or]: [
+          {
+            "$brand.name$": { [Op.iLike]: "%" + trimmedSearchString + "%" },
+          }, // Buscar por nombre de marca
+          { model: { [Op.iLike]: "%" + trimmedSearchString + "%" } }, // Buscar por nombre de producto
         ],
       },
       include: [
@@ -202,7 +249,7 @@ const getQueryProducts = async (model) => {
     if (searchDbName.length > 0) {
       return searchDbName;
     } else {
-      return { error: "Error. No coincide con ningun registro." };
+      return { error: "Error. No coincide con ningún registro." };
     }
   } catch (error) {
     return { error: error.message };
@@ -646,4 +693,5 @@ module.exports = {
   restoreProduct,
   getAllProductsList,
   getDisabledProducts,
+  postpruebaSearchBar,
 };
