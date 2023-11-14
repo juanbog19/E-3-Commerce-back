@@ -221,6 +221,41 @@ const getQueryProducts = async (model) => {
   }
 };
 
+const postpruebaSearchBar = async (searchString) => {
+  try {
+    const trimmedSearchString = searchString.trim();
+
+    if (!searchString || trimmedSearchString === "") {
+      return { error: "Error. La cadena de búsqueda está vacía." };
+    }
+
+    const searchDbName = await Product.findAll({
+      where: {
+        [Op.or]: [
+          {
+            "$brand.name$": { [Op.iLike]: "%" + trimmedSearchString + "%" },
+          }, // Buscar por nombre de marca
+          { model: { [Op.iLike]: "%" + trimmedSearchString + "%" } }, // Buscar por nombre de producto
+        ],
+      },
+      include: [
+        {
+          model: Brand,
+          attributes: ["id", "name"],
+        },
+      ],
+    });
+
+    if (searchDbName.length > 0) {
+      return searchDbName;
+    } else {
+      return { error: "Error. No coincide con ningún registro." };
+    }
+  } catch (error) {
+    return { error: error.message };
+  }
+};
+
 const getFilteredProducts = async (
   filterBy,
   filterValue,
@@ -658,4 +693,5 @@ module.exports = {
   restoreProduct,
   getAllProductsList,
   getDisabledProducts,
+  postpruebaSearchBar,
 };
