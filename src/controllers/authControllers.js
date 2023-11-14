@@ -5,6 +5,7 @@ const { OAuth2Client } = require("google-auth-library");
 const { generateJWT } = require('../helpers/generateJwt.js');
 const { googleVerify } = require('../helpers/google-verify.js');
 require("dotenv").config();
+const { transporter } = require('./sendMail.js')
 
 const STATUS_OK = 200;
 const STATUS_ERROR = 500;
@@ -113,13 +114,16 @@ const googleSignIn = async (req, res) => {
       const data = {
         username,
         email,
-        password: ':P',
+        password: 'EysrO9g6F3zd',
         image,
         google: true
       }
 
       usuario = new User(data)
       await usuario.save()
+
+      let subject = `👋 Bienvenido/a a PhonePulse ${username}!`;
+      transporter(email, subject, username);
     }
 
     if (!usuario.status) {
