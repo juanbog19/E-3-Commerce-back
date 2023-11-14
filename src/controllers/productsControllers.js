@@ -682,6 +682,22 @@ const getFilteredProducts = async (
   }
 };
 
+const statusProduct = async (id) => {
+
+    const record = await Product.findByPk(id)
+    if (!record) {
+        return 'Registro no encontrado'
+    }
+
+    const newChangeStatus = !record.deleted
+    await Product.update({ deleted: newChangeStatus }, { where: { id } })
+
+    const productUpdated = await Product.findByPk(id)
+
+    return productUpdated
+
+}
+
 module.exports = {
   getAllProducts,
   getProductById,
@@ -694,4 +710,5 @@ module.exports = {
   getAllProductsList,
   getDisabledProducts,
   postpruebaSearchBar,
+  statusProduct
 };
