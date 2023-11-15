@@ -47,10 +47,12 @@ const { User, Review, Product, Brand, Order } = sequelize.models;
 
 Product.belongsTo(Brand, { foreignKey: "id_brand" });
 Order.belongsTo(User, { foreignKey: "id_user" });
-Order.belongsTo(Product, { foreignKey: "id_product" });
+Order.belongsToMany(Product, { through: 'orderproducts', foreignKey: 'id_order' });
+Product.belongsToMany(Order, { through: 'orderproducts', foreignKey: 'id_product' });
 Review.belongsTo(User, { foreignKey: "id_user" });
 Review.belongsTo(Product, { foreignKey: "id_product" });
 Review.belongsTo(Order, { foreignKey: "id_order" });
+
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

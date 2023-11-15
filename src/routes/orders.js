@@ -21,7 +21,7 @@ const validate = (req, res, next) => {
 ordersRouter.get("/orders", getOrdersHandler);
 ordersRouter.get("/orders/:id", getOrderHandler);
 ordersRouter.get("/orders/user/:id", getOrdersFromUserHandler);
-ordersRouter.post("/orders", validate, postOrderHandler);
+ordersRouter.post("/orders", postOrderHandler);
 ordersRouter.put("/orders/:id", editOrderHandler);
 ordersRouter.delete("/orders/:id", deleteOrderHandler);
 

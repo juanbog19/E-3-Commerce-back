@@ -33,9 +33,11 @@ const getOrdersFromUserHandler = async (req, res) => {
 };
 
 const postOrderHandler = async (req, res) => {
-  const { order, amount, id_user, id_product } = req.body;
+  const { order, amount, id_user, id_products } = req.body;
+
+  console.log(id_user)
   try {
-    const newOrder = await postOrder(order, amount, id_user, id_product);
+    const newOrder = await postOrder(order, amount, id_user, id_products);
     res.status(201).json({ "Orden creada exitosamente": newOrder });
   } catch (error) {
     res.status(400).json({ error: error.message });

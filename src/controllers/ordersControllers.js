@@ -13,11 +13,15 @@ const getAllOrders = async () => {
         include: {
           model: Brand,
         },
+        through: {
+          attributes: [], // Esto evita que se incluyan las columnas de la tabla intermedia
+        },
       },
     ],
   });
   return allOrders;
 };
+
 
 const getOrderById = async (id) => {
   const orderById = await Order.findByPk(id, {
@@ -56,15 +60,21 @@ const getOrdersFromUser = async (id) => {
   return userOrders;
 };
 
-const postOrder = async (order, amount, id_user, id_product) => {
+const postOrder = async (order, amount, id_user, id_products) => {
+  // Crear la orden con la información proporcionada
   const newOrder = await Order.create({
     order,
     amount,
   });
+  // Asociar la orden al usuario
   await newOrder.setUser(id_user);
-  await newOrder.setProduct(id_product);
+
+  // Asociar varios productos a la orden
+  await newOrder.addProducts(id_products);
+
   return newOrder;
 };
+
 
 const editOrder = async (id, order, amount) => {
   const updateOrder = await Order.update(
