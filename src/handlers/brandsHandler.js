@@ -4,6 +4,7 @@ const {
   postBrand,
   editBrand,
   deleteBrand,
+  getAllBrandsBrands,
 } = require("../controllers/brandsControllers");
 
 const getBrandsHandler = async (req, res) => {
@@ -15,6 +16,15 @@ const getBrandHandler = async (req, res) => {
   const { id } = req.params;
   try {
     const result = await getBrandById(id);
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const getAllBrandsHandler = async (req, res) => {
+  try {
+    const result = await getAllBrandsBrands();
     res.status(200).json(result);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -58,4 +68,5 @@ module.exports = {
   postBrandHandler,
   editBrandHandler,
   deleteBrandHandler,
+  getAllBrandsHandler,
 };

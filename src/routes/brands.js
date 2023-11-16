@@ -6,6 +6,7 @@ const {
   postBrandHandler,
   editBrandHandler,
   deleteBrandHandler,
+  getAllBrandsHandler,
 } = require("../handlers/brandsHandler");
 
 const brandsRouter = Router();
@@ -19,6 +20,7 @@ const validate = (req, res, next) => {
 
 brandsRouter.get("/brands", getBrandsHandler);
 brandsRouter.get("/brands/:id", getBrandHandler);
+brandsRouter.get("/brandsAll", getAllBrandsHandler);
 brandsRouter.post("/brands", postBrandHandler);
 brandsRouter.put("/brands/:id", editBrandHandler);
 brandsRouter.delete("/brands/:id", deleteBrandHandler);
